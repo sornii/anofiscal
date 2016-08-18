@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 import java.time.Month;
 import java.time.Year;
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -108,5 +109,17 @@ public class AnoFiscalTest {
     @Test(dataProvider = "tiposMeses")
     public void testarAnoFiscalData(AnoFiscalTipo tipo, Month mes) {
 
+    }
+
+    @Test(dataProvider = "tipos")
+    public void testar(AnoFiscalTipo tipo) {
+        CalculadoraAnoFiscal calculadoraAnoFiscal = new CalculadoraAnoFiscal();
+
+        AnoFiscal anoFiscal = tipo.construirAnoFiscal(Year.of(2016));
+        AnoFiscalData anoFiscalData = anoFiscal.construirAnoFiscalData(anoFiscal.getUltimoMes());
+
+        YearMonth dataGregoriana = calculadoraAnoFiscal.calcularDataGregoriana(anoFiscalData);
+
+        System.out.println(dataGregoriana);
     }
 }

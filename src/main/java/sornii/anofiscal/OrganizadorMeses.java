@@ -45,6 +45,14 @@ class OrganizadorMeses {
                 .collect(Collectors.toList());
     }
 
+    public Month getMesNaOrdem(int ordem) {
+        return getMesesOrdenados().get(ordem);
+    }
+
+    public int getOrdemDoMes(Month month) {
+        return getMesesOrdenados().indexOf(month);
+    }
+
     public Comparator<Month> comparadorDeMeses() {
         return comparadorMeses;
     }

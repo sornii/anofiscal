@@ -17,14 +17,19 @@ public enum AnoFiscalTipo {
     @Getter
     private final OrganizadorMeses organizadorMeses;
 
+    @Getter
+    private final AnoFiscalOffsetTipo offsetTipo;
+
     AnoFiscalTipo(Month primeiroMes) {
         periodoMeses = new PeriodoMesesImmutable(primeiroMes);
         organizadorMeses = new OrganizadorMeses(periodoMeses);
+        offsetTipo = AnoFiscalOffsetTipo.ATRASADO;
     }
 
     AnoFiscalTipo(AnoFiscalTipo anoFiscalTipo) {
-        this.periodoMeses = anoFiscalTipo.periodoMeses;
-        this.organizadorMeses = anoFiscalTipo.organizadorMeses;
+        this.periodoMeses = anoFiscalTipo.getPeriodoMeses();
+        this.organizadorMeses = anoFiscalTipo.getOrganizadorMeses();
+        offsetTipo = AnoFiscalOffsetTipo.ATRASADO;
     }
 
     public AnoFiscal construirAnoFiscal(Year ano) {

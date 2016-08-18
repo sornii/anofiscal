@@ -12,19 +12,24 @@ public class AnoFiscalData {
 
     private Month mes;
 
+    public AnoFiscalData(AnoFiscal anoFiscal, Month mes) {
+        this.anoFiscal = anoFiscal;
+        this.mes = mes;
+    }
+
     public AnoFiscalData(AnoFiscal anoFiscal, YearMonth dataGregoriana) {
         this.anoFiscal = anoFiscal;
     }
 
-    public AnoFiscalTipo getTipo() {
-        return anoFiscal.getTipo();
-    }
-
-    public AnoFiscal getAnoFiscal() {
-        return getTipo().construirAnoFiscal(anoFiscal.getAno());
+    public AnoFiscalData(AnoFiscalTipo anoFiscalTipo, YearMonth dataGregoriana) {
+        //this.anoFiscal = anoFiscalTipo.construirAnoFiscal()
     }
 
     public YearMonth getDataGregoriana() {
         return null;
+    }
+
+    public YearMonth getData() {
+        return YearMonth.of(getAnoFiscal().getAno().getValue(), getMes());
     }
 }

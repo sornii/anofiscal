@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.time.Month;
 import java.time.Year;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 @Data
 public class AnoFiscal {
@@ -41,6 +43,19 @@ public class AnoFiscal {
     public void setTipo(AnoFiscalTipo tipo) {
         this.tipo = tipo;
         this.periodoMeses = tipo.getPeriodoMeses();
+        this.offsetTipo = tipo.getOffsetTipo();
+        atualizarOrganizadorMeses();
+    }
+
+    private void setMes(Month mes, BiConsumer<PeriodoMeses, Month> setter,
+                        Function<Month, PeriodoMeses> construtor) {
+        if (isAnoFiscalPersonalizado() && periodoMeses != null) {
+            setter.accept(periodoMeses, mes);
+        } else {
+            periodoMeses = construtor.apply(mes);
+        }
+        atualizarOrganizadorMeses();
+        tipo = null;
     }
 
     public Month getPrimeiroMes() {
@@ -48,12 +63,8 @@ public class AnoFiscal {
     }
 
     public void setPrimeiroMes(Month primeiroMes) {
-        if (isAnoFiscalPersonalizado() && periodoMeses != null) {
-            periodoMeses.setPrimeiroMes(primeiroMes);
-        } else {
-            periodoMeses = PeriodoMeses.construirUsandoPrimeiroMes(primeiroMes);
-        }
-        tipo = null;
+        setMes(primeiroMes, PeriodoMeses::setPrimeiroMes,
+                PeriodoMeses::construirUsandoPrimeiroMes);
     }
 
     public Month getUltimoMes() {
@@ -61,15 +72,19 @@ public class AnoFiscal {
     }
 
     public void setUltimoMes(Month ultimoMes) {
-        if (isAnoFiscalPersonalizado() && periodoMeses != null) {
-            periodoMeses.setUltimoMes(ultimoMes);
-        } else {
-            periodoMeses = PeriodoMeses.construirUsandoUltimoMes(ultimoMes);
-        }
-        tipo = null;
+        setMes(ultimoMes, PeriodoMeses::setUltimoMes,
+                PeriodoMeses::construirUsandoUltimoMes);
     }
 
     public boolean isAnoFiscalPersonalizado() {
         return tipo == null;
+    }
+
+    public AnoFiscalData construirAnoFiscalData(Month mes) {
+        return new AnoFiscalData(this, mes);
+    }
+
+    private void atualizarOrganizadorMeses() {
+        organizadorMeses = new OrganizadorMeses(periodoMeses);
     }
 }
