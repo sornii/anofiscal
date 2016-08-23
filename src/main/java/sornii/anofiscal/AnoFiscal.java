@@ -16,9 +16,9 @@ public class AnoFiscal {
 
     private PeriodoMeses periodoMeses;
 
-    private AnoFiscalTipo tipo;
+    private AnoFiscalPadraoMundial tipo;
 
-    private AnoFiscalOffsetTipo offsetTipo;
+    private AnoFiscalMesReferencia offsetTipo;
 
     @Setter(AccessLevel.NONE)
     private OrganizadorMeses organizadorMeses;
@@ -30,7 +30,7 @@ public class AnoFiscal {
         setAno(ano);
     }
 
-    public AnoFiscal(AnoFiscalTipo tipo, Year ano) {
+    public AnoFiscal(AnoFiscalPadraoMundial tipo, Year ano) {
         this(ano);
         setTipo(tipo);
     }
@@ -40,7 +40,7 @@ public class AnoFiscal {
         setPrimeiroMes(primeiroMes);
     }
 
-    public void setTipo(AnoFiscalTipo tipo) {
+    public void setTipo(AnoFiscalPadraoMundial tipo) {
         this.tipo = tipo;
         this.periodoMeses = tipo.getPeriodoMeses();
         this.offsetTipo = tipo.getOffsetTipo();
@@ -64,7 +64,7 @@ public class AnoFiscal {
 
     public void setPrimeiroMes(Month primeiroMes) {
         setMes(primeiroMes, PeriodoMeses::setPrimeiroMes,
-                PeriodoMeses::construirUsandoPrimeiroMes);
+                PeriodoMesesFactory::construirUsandoPrimeiroMes);
     }
 
     public Month getUltimoMes() {
@@ -73,7 +73,7 @@ public class AnoFiscal {
 
     public void setUltimoMes(Month ultimoMes) {
         setMes(ultimoMes, PeriodoMeses::setUltimoMes,
-                PeriodoMeses::construirUsandoUltimoMes);
+                PeriodoMesesFactory::construirUsandoUltimoMes);
     }
 
     public boolean isAnoFiscalPersonalizado() {

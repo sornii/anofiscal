@@ -17,7 +17,7 @@ public class AnoFiscalTest {
 
     @DataProvider(name = "tipos")
     public Iterator<Object[]> tipos() {
-        return Stream.of(AnoFiscalTipo.values())
+        return Stream.of(AnoFiscalPadraoMundial.values())
                 .map(a -> new Object[]{a})
                 .collect(Collectors.toList())
                 .iterator();
@@ -35,7 +35,7 @@ public class AnoFiscalTest {
     public Iterator<Object[]> tiposMeses() {
         List<Object[]> list = new ArrayList<>();
 
-        for (AnoFiscalTipo tipo : AnoFiscalTipo.values()) {
+        for (AnoFiscalPadraoMundial tipo : AnoFiscalPadraoMundial.values()) {
             for (Month mes : Month.values()) {
                 list.add(new Object[]{tipo, mes});
             }
@@ -54,7 +54,7 @@ public class AnoFiscalTest {
     }
 
     @Test(dataProvider = "tipos")
-    public void testarCriacaoAnoFiscal(AnoFiscalTipo tipo) {
+    public void testarCriacaoAnoFiscal(AnoFiscalPadraoMundial tipo) {
         AnoFiscal anoFiscal = new AnoFiscal(tipo, Year.now());
 
         PeriodoMeses periodoMeses = tipo.getPeriodoMeses();
@@ -64,7 +64,7 @@ public class AnoFiscalTest {
     }
 
     @Test(dataProvider = "tipos")
-    public void testarTiposAnoFiscal(AnoFiscalTipo tipo) {
+    public void testarTiposAnoFiscal(AnoFiscalPadraoMundial tipo) {
         PeriodoMeses periodoMeses = tipo.getPeriodoMeses();
 
         Month primeiroMes = periodoMeses.getPrimeiroMes();
@@ -74,7 +74,7 @@ public class AnoFiscalTest {
     }
 
     @Test(dataProvider = "tipos")
-    public void testarQuantidadeMesesOrdenados(AnoFiscalTipo tipo) {
+    public void testarQuantidadeMesesOrdenados(AnoFiscalPadraoMundial tipo) {
         OrganizadorMeses organizadorMeses = tipo.getOrganizadorMeses();
 
         List<Month> mesesOrdenados = organizadorMeses.getMesesOrdenados();
@@ -82,7 +82,7 @@ public class AnoFiscalTest {
     }
 
     @Test(dataProvider = "tipos")
-    public void testarPrimeiroUltimoMesesOrdenados(AnoFiscalTipo tipo) {
+    public void testarPrimeiroUltimoMesesOrdenados(AnoFiscalPadraoMundial tipo) {
         OrganizadorMeses organizadorMeses = tipo.getOrganizadorMeses();
         List<Month> mesesOrdenados = organizadorMeses.getMesesOrdenados();
 
@@ -93,7 +93,7 @@ public class AnoFiscalTest {
     }
 
     @Test(dataProvider = "tipos")
-    public void testarPrimeiroUltimoMesesOrdenadosContrario(AnoFiscalTipo tipo) {
+    public void testarPrimeiroUltimoMesesOrdenadosContrario(AnoFiscalPadraoMundial tipo) {
         OrganizadorMeses organizadorMeses = tipo.getOrganizadorMeses();
 
         List<Month> mesesOrdenadosContrario = Stream.of(Month.values())
@@ -107,18 +107,18 @@ public class AnoFiscalTest {
     }
 
     @Test(dataProvider = "tiposMeses")
-    public void testarAnoFiscalData(AnoFiscalTipo tipo, Month mes) {
+    public void testarAnoFiscalData(AnoFiscalPadraoMundial tipo, Month mes) {
 
     }
 
     @Test(dataProvider = "tipos")
-    public void testar(AnoFiscalTipo tipo) {
-        CalculadoraAnoFiscal calculadoraAnoFiscal = new CalculadoraAnoFiscal();
+    public void testar(AnoFiscalPadraoMundial tipo) {
+        CalculadoraDataGregoriana calculadoraDataGregoriana = new CalculadoraDataGregoriana();
 
         AnoFiscal anoFiscal = tipo.construirAnoFiscal(Year.of(2016));
         AnoFiscalData anoFiscalData = anoFiscal.construirAnoFiscalData(anoFiscal.getUltimoMes());
 
-        YearMonth dataGregoriana = calculadoraAnoFiscal.calcularDataGregoriana(anoFiscalData);
+        YearMonth dataGregoriana = calculadoraDataGregoriana.calcularDataGregoriana(anoFiscalData);
 
         System.out.println(dataGregoriana);
     }

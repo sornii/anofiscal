@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.time.Month;
 
+/**
+ * Utilizada para definição dinâmica do primeiro e do último mês de um calendário de ano fiscal
+ */
 @Data
 public class PeriodoMeses {
 
@@ -11,21 +14,7 @@ public class PeriodoMeses {
 
     private Month ultimoMes;
 
-    protected PeriodoMeses() {
-    }
-
-    public static PeriodoMeses construirUsandoPrimeiroMes(Month primeiroMes) {
-        PeriodoMeses periodoMeses = new PeriodoMeses();
-        periodoMeses.setPrimeiroMes(primeiroMes);
-
-        return periodoMeses;
-    }
-
-    public static PeriodoMeses construirUsandoUltimoMes(Month ultimoMes) {
-        PeriodoMeses periodoMeses = new PeriodoMeses();
-        periodoMeses.setUltimoMes(ultimoMes);
-
-        return periodoMeses;
+    PeriodoMeses() {
     }
 
     public void setPrimeiroMes(Month primeiroMes) {

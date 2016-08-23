@@ -21,7 +21,7 @@ public class AnoFiscalData {
         this.anoFiscal = anoFiscal;
     }
 
-    public AnoFiscalData(AnoFiscalTipo anoFiscalTipo, YearMonth dataGregoriana) {
+    public AnoFiscalData(AnoFiscalPadraoMundial anoFiscalPadraoMundial, YearMonth dataGregoriana) {
         //this.anoFiscal = anoFiscalTipo.construirAnoFiscal()
     }
 

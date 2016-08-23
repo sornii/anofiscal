@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class OrganizadorMeses {
+final class OrganizadorMeses {
 
     private Comparator<Month> comparadorMeses;
 
@@ -34,7 +34,7 @@ class OrganizadorMeses {
         comparadorMeses = Comparator.comparing(ordenacaoMeses::get);
     }
 
-    public OrganizadorMeses(PeriodoMeses periodoMeses) {
+    OrganizadorMeses(PeriodoMeses periodoMeses) {
         this(periodoMeses.getPrimeiroMes(), periodoMeses.getUltimoMes());
     }
 

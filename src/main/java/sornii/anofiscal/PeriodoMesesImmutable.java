@@ -2,9 +2,12 @@ package sornii.anofiscal;
 
 import java.time.Month;
 
-public class PeriodoMesesImmutable extends PeriodoMeses {
+/**
+ * Bloqueia mudanças imprevistas para os períodos utilizados nos padrões mundiais
+ */
+final class PeriodoMesesImmutable extends PeriodoMeses {
 
-    public PeriodoMesesImmutable(Month primeiroMes) {
+    PeriodoMesesImmutable(Month primeiroMes) {
         super.setPrimeiroMes(primeiroMes);
     }
 
