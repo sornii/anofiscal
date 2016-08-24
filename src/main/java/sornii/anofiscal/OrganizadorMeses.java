@@ -8,11 +8,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-final class OrganizadorMeses {
+public class OrganizadorMeses {
+
+    public static final Integer ULTIMA_ORDEM = 11;
+    public static final Integer PRIMEIRA_ORDEM = 0;
 
     private Comparator<Month> comparadorMeses;
 
-    public OrganizadorMeses(Month primeiroMes, Month ultimoMes) {
+    public OrganizadorMeses(PeriodoMeses periodoMeses) {
+        Month primeiroMes = periodoMeses.getPrimeiroMes();
+        Month ultimoMes = periodoMeses.getUltimoMes();
 
         Map<Month, Integer> ordenacaoMeses = new EnumMap<>(Month.class);
 
@@ -32,10 +37,6 @@ final class OrganizadorMeses {
         }
 
         comparadorMeses = Comparator.comparing(ordenacaoMeses::get);
-    }
-
-    OrganizadorMeses(PeriodoMeses periodoMeses) {
-        this(periodoMeses.getPrimeiroMes(), periodoMeses.getUltimoMes());
     }
 
     @SuppressWarnings("squid:S2095")

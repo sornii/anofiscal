@@ -1,39 +1,33 @@
 package sornii.anofiscal;
 
 import java.time.Month;
-import java.time.Year;
 import java.time.YearMonth;
 
 public class CalculadoraDataGregoriana {
 
-    public YearMonth calcularDataGregoriana(AnoFiscalData anoFiscalData) {
-        AnoFiscal anoFiscal = anoFiscalData.getAnoFiscal();
-        AnoFiscalMesReferencia offsetTipo = anoFiscal.getOffsetTipo();
+    public YearMonth calcularDataGregoriana(AnoFiscalPadrao anoFiscalPadrao, YearMonth dataFiscal) {
+        AnoFiscalMesReferencia mesReferencia = anoFiscalPadrao.getMesReferencia();
 
-        YearMonth data = anoFiscalData.getData();
+        PeriodoMeses periodoMeses = anoFiscalPadrao.getPeriodoMeses();
+        OrganizadorMeses organizadorMeses = periodoMeses.getOrganizadorMeses();
 
-        OrganizadorMeses organizadorMeses = anoFiscal.getOrganizadorMeses();
         int ordemDezembro = organizadorMeses.getOrdemDoMes(Month.DECEMBER);
-        int ordemDoMes = organizadorMeses.getOrdemDoMes(data.getMonth());
+        if (ordemDezembro == OrganizadorMeses.ULTIMA_ORDEM) {
+            return dataFiscal;
+        }
 
-        if (offsetTipo == AnoFiscalMesReferencia.PRIMEIRO_MES) {
+        int ordemDoMes = organizadorMeses.getOrdemDoMes(dataFiscal.getMonth());
+
+        if (mesReferencia == AnoFiscalMesReferencia.PRIMEIRO_MES) {
             if (ordemDoMes <= ordemDezembro) {
-                return data;
+                return dataFiscal;
             }
-            return data.plusYears(1);
+            return dataFiscal.plusYears(1);
         }
 
         if (ordemDoMes <= ordemDezembro) {
-            return data.minusYears(1);
+            return dataFiscal.minusYears(1);
         }
-        return data;
-    }
-
-    public YearMonth calcularDataGregoriana(AnoFiscal anoFiscal, Month mes) {
-        return calcularDataGregoriana(new AnoFiscalData(anoFiscal, mes));
-    }
-
-    public YearMonth calcularDataGregoriana(AnoFiscalPadraoMundial anoFiscalPadraoMundial, Month mes, Year ano) {
-        return calcularDataGregoriana(new AnoFiscal(anoFiscalPadraoMundial, ano), mes);
+        return dataFiscal;
     }
 }
