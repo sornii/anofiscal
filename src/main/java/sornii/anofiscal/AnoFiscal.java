@@ -11,20 +11,13 @@ public class AnoFiscal {
 
     private AnoFiscalPadrao anoFiscalPadrao;
 
-    protected AnoFiscal() {
-    }
-
-    private AnoFiscal(Year ano) {
-        setAno(ano);
-    }
-
     public AnoFiscal(AnoFiscalPadrao anoFiscalPadrao, Year ano) {
-        this(ano);
+        setAno(ano);
         setAnoFiscalPadrao(anoFiscalPadrao);
     }
 
     public AnoFiscal(AnoFiscalPadraoMundial tipo, Year ano) {
-        this(ano);
+        setAno(ano);
         setAnoFiscalPadrao(tipo.getAnoFiscalPadrao());
     }
 }
